@@ -19,8 +19,8 @@
 
 #define NEAR_CLIP_PLANE         0.001
 #define FAR_CLIP_PLANE          1000.0
-#define MAX_RAYCAST_STEPS       200
-#define STEP_DAMPING            0.6
+#define MAX_RAYCAST_STEPS       100
+#define STEP_DAMPING            0.9
 #define DIST_EPSILON            0.001
 
 
@@ -138,7 +138,7 @@ vec2 coordSys(vec3 p) {
 // Your distance function here
 float distf(vec3 p) {
     float scale = 0.5;
-    p *= 1/scale;
+    p *= 1.0/scale;
     vec3 p0 = p;
     float d = cylinder(translate(p, vec3(0.0, 1.7, 0.0)), 1.2, 0.1);
     p.xz = repeatAng(p.xz, 5.0).xy;
@@ -213,7 +213,6 @@ vec3 render(in vec3 ro, in vec3 rd) {
     vec3  lig = -rd;
     vec3 pos = ro + t*rd;
     vec3 nor = calcNormal(pos);
-    vec3 ref = reflect(lig, nor);
     vec3 mtlColor = getMaterialColor(mtlID);
     
     float ambient = 0.05;
